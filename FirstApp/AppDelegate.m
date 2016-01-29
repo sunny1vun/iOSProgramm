@@ -126,9 +126,15 @@ static NSMutableArray *array;
     
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
+<<<<<<< HEAD
     [array addObject:myEvent];
     
     NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
+=======
+    [self.arrayOfEvents addObject:myEvent];
+
+    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)self.arrayOfEvents.count);
+>>>>>>> 88e7a719f04143552a6076b84beae85f34126d0f
 
 }
 
