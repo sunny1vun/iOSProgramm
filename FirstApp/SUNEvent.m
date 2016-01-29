@@ -10,16 +10,15 @@
 
 @implementation SUNEvent
 
--(instancetype)initWithEventName:(NSString*)eventName
-             eventDate:(NSDate*)eventDate
-               eventID:(NSString*)eventID{
+-(instancetype)initWithEventName:(NSString*)eventName{
     
     self= [super init];
     
     if(self){
+//        SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
         self.eventName= eventName;
-        self.eventDate= eventDate;
-        self.eventID= eventID;
+        self.eventDate= [NSDate date];
+        self.eventID= [[NSUUID UUID] UUIDString];
     }
     return self;
 }

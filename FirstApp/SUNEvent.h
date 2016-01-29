@@ -14,8 +14,6 @@
 @property (nonatomic) NSDate *eventDate;
 @property (nonatomic) NSString *eventID;
 
--initWithEventName:(NSString*) eventName
-         eventDate:(NSDate*) eventDate
-           eventID:(NSString*) eventID;
+-initWithEventName:(NSString*) eventName;
 
 @end
