@@ -121,17 +121,9 @@
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: nameOfEvent eventDate: dateOfEvent eventID:idOfEvent];
     
     [self.arrayOfEvents addObject:myEvent];
-//    NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
-//    
-//    [defaults setObject:self.arrayOfEvents forKey:@"myArray"];
-//    
-//    [defaults synchronize];
-//    self.arrayOfEvents se
+
     NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)self.arrayOfEvents.count);
 
-
-//    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:self.arrayOfEvents];
-//    [defaults setObject:data forKey:@"myData"];
 }
 
 @end
