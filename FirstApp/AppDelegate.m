@@ -34,11 +34,12 @@ static NSMutableArray *array;
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
     NSData *data= [[NSUserDefaults standardUserDefaults] objectForKey:@"myData"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    if([data class] == [NSMutableArray class])
+    if (data) //([data class] == [NSMutableArray class])
         array= [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
+    NSLog(@"%lu",array.count);
     if(array== nil)
         array= [[NSMutableArray alloc] init];
     
@@ -83,10 +84,6 @@ static NSMutableArray *array;
     
     NSLog(@"%lu",(unsigned long)array.count);
 
-//    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:array];
-//    
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 
@@ -98,10 +95,6 @@ static NSMutableArray *array;
     [array addObject:myEvent];
     
     NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
-    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:array];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 
 
 }
@@ -114,10 +107,6 @@ static NSMutableArray *array;
     [array addObject:myEvent];
     
     NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
-//    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:array];
-//    
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 
@@ -129,9 +118,10 @@ static NSMutableArray *array;
     [array addObject:myEvent];
     
     NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
-    [self.arrayOfEvents addObject:myEvent];
-
-    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)self.arrayOfEvents.count);
+    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:array];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 
