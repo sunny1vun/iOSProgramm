@@ -32,17 +32,17 @@ static NSMutableArray *array;
 -(BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
-    if(array== nil)
-        array= [[NSMutableArray alloc] init];
-    
-    [array addObject:myEvent];
-    
     
     NSData *data= [[NSUserDefaults standardUserDefaults] objectForKey:@"myData"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     if([data class] == [NSMutableArray class])
         array= [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    if(array== nil)
+        array= [[NSMutableArray alloc] init];
+    
+    [array addObject:myEvent];
     
     NSLog(@"%lu",array.count);
 
@@ -126,15 +126,12 @@ static NSMutableArray *array;
     
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
-<<<<<<< HEAD
     [array addObject:myEvent];
     
     NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
-=======
     [self.arrayOfEvents addObject:myEvent];
 
     NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)self.arrayOfEvents.count);
->>>>>>> 88e7a719f04143552a6076b84beae85f34126d0f
 
 }
 
