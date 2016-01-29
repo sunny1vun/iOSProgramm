@@ -11,34 +11,40 @@
 
 @interface AppDelegate ()
     @property (strong, nonatomic) NSMutableArray *arrayOfEvents;
+
 @end
 
 @implementation AppDelegate
 
--(instancetype)init{
-    
-    self=[super init];
-    
-    if (self) {
-        _arrayOfEvents=[[NSMutableArray alloc] init];
-    }
-    return self;
-    
-}
+static NSMutableArray *array;
+
+//-(instancetype)init{
+//    
+//    self=[super init];
+//    
+//    if (self) {
+//        _arrayOfEvents=[[NSMutableArray alloc] init];
+//    }
+//    return self;
+//    
+//}
 
 -(BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
+    if(array== nil)
+        array= [[NSMutableArray alloc] init];
     
-    [self.arrayOfEvents addObject:myEvent];
+    [array addObject:myEvent];
+    
     
     NSData *data= [[NSUserDefaults standardUserDefaults] objectForKey:@"myData"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    if(data)
-        self.arrayOfEvents= [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    if([data class] == [NSMutableArray class])
+        array= [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    NSLog(@"%d",(int)self.arrayOfEvents.count);
+    NSLog(@"%lu",array.count);
 
     return YES;
 }
@@ -48,9 +54,9 @@
     
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
-    [self.arrayOfEvents addObject:myEvent];
+    [array addObject:myEvent];
     
-    NSLog(@"%d",(int)self.arrayOfEvents.count);
+    NSLog(@"%lu",(unsigned long)array.count);
 
     return YES;
 }
@@ -61,9 +67,9 @@
     
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
-    [self.arrayOfEvents addObject:myEvent];
+    [array addObject:myEvent];
     
-    NSLog(@"%d",(int)self.arrayOfEvents.count);
+    NSLog(@"%lu",(unsigned long)array.count);
 
 }
 
@@ -73,65 +79,57 @@
     
     SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
-    [self.arrayOfEvents addObject:myEvent];
+    [array addObject:myEvent];
     
-    NSLog(@"%d",(int)self.arrayOfEvents.count);
+    NSLog(@"%lu",(unsigned long)array.count);
 
-    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:self.arrayOfEvents];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:array];
+//    
+//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    NSString *nameOfEvent= [NSString stringWithUTF8String:__PRETTY_FUNCTION__];
-    NSDate *dateOfEvent= [NSDate date];
-    NSString *idOfEvent= [[NSUUID UUID] UUIDString];
     
-    SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: nameOfEvent eventDate: dateOfEvent eventID:idOfEvent];
+    SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
-    [self.arrayOfEvents addObject:myEvent];
+    [array addObject:myEvent];
     
-    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)self.arrayOfEvents.count);
+    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
+    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:array];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
 
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    NSString *nameOfEvent= [NSString stringWithUTF8String:__PRETTY_FUNCTION__];
-    NSDate *dateOfEvent= [NSDate date];
-    NSString *idOfEvent= [[NSUUID UUID] UUIDString];
-    SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: nameOfEvent eventDate: dateOfEvent eventID:idOfEvent];
     
-    [self.arrayOfEvents addObject:myEvent];
+    SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
-    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)self.arrayOfEvents.count);
-
+    [array addObject:myEvent];
+    
+    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
+//    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:array];
+//    
+//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myData"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
 
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    NSString *nameOfEvent= [NSString stringWithUTF8String:__PRETTY_FUNCTION__];
-    NSDate *dateOfEvent= [NSDate date];
-    NSString *idOfEvent= [[NSUUID UUID] UUIDString];
     
-    SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: nameOfEvent eventDate: dateOfEvent eventID:idOfEvent];
+    SUNEvent *myEvent=[[SUNEvent alloc] initWithEventName: [NSString stringWithUTF8String:__PRETTY_FUNCTION__] eventDate: [NSDate date] eventID:[[NSUUID UUID] UUIDString]];
     
-    [self.arrayOfEvents addObject:myEvent];
-//    NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
-//    
-//    [defaults setObject:self.arrayOfEvents forKey:@"myArray"];
-//    
-//    [defaults synchronize];
-//    self.arrayOfEvents se
-    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)self.arrayOfEvents.count);
+    [array addObject:myEvent];
+    
+    NSLog(@"%@\n\n %lu", myEvent.eventName, (unsigned long)array.count);
 
-
-//    NSData *data= [NSKeyedArchiver archivedDataWithRootObject:self.arrayOfEvents];
-//    [defaults setObject:data forKey:@"myData"];
 }
 
 @end
